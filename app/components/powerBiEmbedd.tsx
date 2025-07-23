@@ -79,6 +79,7 @@ const PowerBIReport: React.FC<PowerBIReportProps> = ({
           accessToken: accessToken,
           tokenType: models.TokenType.Embed,
           settings: {
+            background: models.BackgroundType.Transparent,
             panes: {
               filters: { visible: false },
               pageNavigation: { visible: false },
@@ -86,7 +87,7 @@ const PowerBIReport: React.FC<PowerBIReportProps> = ({
           },
           filters: filters,
         }}
-        cssClassName="powerbi-embed  w-full h-full"
+        cssClassName="powerbi-embed  w-full h-full bg-transparent"
         getEmbeddedComponent={(embeddedReport: any) => {
           console.log('Report embedded:', embeddedReport);
           
