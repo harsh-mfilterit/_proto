@@ -23,9 +23,9 @@ export default function DynamicLayoutWrapper({
 }: DynamicLayoutWrapperProps) {
   const layouts = {
     lg: [
-      { i: "a", x: 0, y: 0, w: 12, h: 10, minW: 2, maxW: 12 },
-      { i: "b", x: 0, y: 2, w: 12, h: 2, minW: 2, maxW: 12 },
-      { i: "c", x: 0, y: 4, w: 12, h: 2, minW: 2, maxW: 12 },
+      { i: "Market Share", x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12 },
+      { i: "Top Lossers", x: 0, y: 2, w: 12, h: 2, minW: 2, maxW: 12 },
+      { i: "Top Gainers", x: 0, y: 4, w: 12, h: 2, minW: 2, maxW: 12 },
     ],
   };
 
@@ -33,28 +33,29 @@ export default function DynamicLayoutWrapper({
     <div className={className} style={style}>
       <div className="w-full">
         <ResponsiveGrid
-          className="layout"
+          className="layout w-full h-full"
           layouts={layouts}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={30}
-          isResizable={false}
-        //   isDraggable={false}
+          //   isResizable={false}
+          //   isDraggable={false}
           draggableCancel=".no-drag"
         >
-            {React.Children.map(children, (child, idx) => (
+          {React.Children.map(children, (child, idx) =>
+            child ? (
               <div
-                key={idx}
+                key={child?.props.key}
                 data-grid={child.props.dataGrid}
                 className="w-full h-full bg-gray-200 rounded-lg shadow border-2 border-gray-300 cursor-move pt-5 pb-2 px-2"
               >
-                {/* <p className="p-0 m-0">::</p> */}
+                {/* <p className="p-0 m-0">{child.key}</p> */}
                 <div className="bg-white rounded-lg w-full h-full no-drag cursor-pointer z-10 p-2">
-                {child}
+                  {child}
                 </div>
               </div>
-            ))}
-          
+            ) : null
+          )}
         </ResponsiveGrid>
       </div>
     </div>

@@ -1,20 +1,36 @@
-import React from "react";
-import DynamicLayoutWrapper from "~/components/DynamicLayoutWrapper";
-import PowerBIWrapper from "~/components/powerBiWrapper";
-import { MENUS } from "~/util/Constants";
+import React, { useState } from "react";
+import DynamicLayoutWrapper from "@/components/DynamicLayoutWrapper";
+import PowerBIWrapper from "@/components/powerBiWrapper";
+import { MENUS, LAYOUTS, get_layout } from "@/util/Constants";
+import { MultiSelect } from "@/components/ui/multi-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const config = {
-  "embedUrl": "https://app.powerbi.com/reportEmbed?reportId=df510bae-3e6d-40de-844d-23b265dd3e26&groupId=c11cf21f-e3fb-4518-99d5-0246c102312d&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19",
-  "embedToken": "H4sIAAAAAAAEACWTxxKr2AFE_-VtcRUZCVfNgiS45BzuTiBA5Bxd_nfLM9uuXp0-_Z8_9vtqh_fnz7__ZIi26bELJyyotoV6JM_PVqZENqcpGfDuk3ufVNKJp5pjKaSUAIxj3L0eW6JSPj4Vc0buEc0scU_xywIaKQfwaPEV79tJB7c1spTWhk6pBbh5MMYRQwQa7TUG4TCo4l6kpUJGnw1hmcNOJXyaaCdb6hDSUMHSJeemOOQHPJc2eoeRd7NVLGcz5knrI-Y_0UjSeT1-X5SE0OaOyc_zZhsqjNOkj_HPfQsCWVUTzR39w-5QlPAfnk-orhgybVSp6dHy9eYMGuNbm3a3pTDPeAjuKRbky7NWJ9tEr0zYtZIOSawkTWjWFs7-V12yFjqxB9HxQMoM5cQv41TIo4CNn61YzxyO3ORvQH_kkt6jyR6kq1IhS8rhodWgzpcvPcl0oouMgEk6nfA72p8vQt-kp9_HGTpVY15n-xpN9RMR47w6MWKcWNULxRKXPFTXh3CCACXiRp-e64-IfE1JZCTQueHiC1YESj7bU_vtqD5icmYzv1ohJW52QJ1zQf1Zi5Pj440wl22k-XbkXYkBMVeJ4PAHYNCwclx0HqybL-NMJtFSoyzi-3TOTkVtoXIMPGg0qoXvA8HaULTbIOtL1bhWr6jHSVJDyTITL30NwVjJ3g4C9huVeHtz-Oj2hS7Xr5Fbao0jcIKCVWbrjEEcX8vmct5wz1F2paKNaldHzyVzUqQGhh2utT25b1yPjCNDnqX-2ghbiqSYPW0zfIbZccxkJ9LuLZekqmdwf4yTmWekwyfyY-zXtttdmsHedSpDtRrfnP1uRCW2GAWqrswyGY2CozBRwA0MvjyWk8vkdrPZ6YVQB8N3ZqKqjRR-XRxPFaUFOGmSN3gVWw1QuQZ-zXJFrL0KMmedv_76868_wnyN66Dl1-9mOGItvAouHBHu6ohep5SoF3og9olLHElNHhvUxUHTN1Ff4zAyZMVyM7c0SPAiTvXxdF1ce-_P394mEraFRQnQdK5mNGo9ikV9PeHLO_VLxI_tNAeHxcupdocjYnDC8PA2roE3MoD_7OBOKqEoLafaAtN89nxOfLhtMzL1OEE9M4rrgBw58hZNO6dxuoNcP3nmv1bD_IYh76WKuJjNGiXEJQ8T3ogXj6FInt3fNrRt7hMz6c5qaGAK1pIhHhQmDyiRL6U9SMG2XtU993XwDXIS2gNmR_Sjkky1Y9bZHI0Eg-k8UXnI3ajPNSRequyFwY9eVDNIlW8S6GPTsFFzWU6Tvrl_MF_jN59B-KOsfuZ0t7QNun7mA28ZhM4kjr9bXlX273Wb819t_7GpjfWsOMn7DroY-jI2OqXiSbH1ZT6EX4fFfG8L0w-NZOqowEiU95PnyORp-CEV6HEj3ChqVYIdZZyJgvEnkfaLOVu04dex4zpVuPmiBFqi58h5KsPr9juHieHOHzKNXNh8fjuDPraefGBW4DxpoTX67kP0xSymRIcIV5CApwI6ZXdn4hirs9rjyBMO7rBl2edTtcHaZeYoQKv6FT2RFQuxwgDRRuLJumtjN_nGJ5PL_azzkrKF8rlVhQVbn3zHGvT6HMQipwdyykP5JRhjTtx9aM_KnOZp6oi3AqnO67hFTN4C4FZx3wXbHQJBL8Bp5Wu8GNQotTOs7zeGtm37f-f_-z-xwD0ZWgYAAA==.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZXhwIjoxNzUzMjg1MjgzLCJhbGxvd0FjY2Vzc092ZXJQdWJsaWNJbnRlcm5ldCI6dHJ1ZX0=",
-  "reportId": "df510bae-3e6d-40de-844d-23b265dd3e26"
-}
+  embedUrl:
+    "https://app.powerbi.com/reportEmbed?reportId=df510bae-3e6d-40de-844d-23b265dd3e26&groupId=c11cf21f-e3fb-4518-99d5-0246c102312d&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19",
+  embedToken:
+    "H4sIAAAAAAAEAC2Tta7sWAIA_-WmXslMK73AdpvazJCZ28xwejT_vnc1k1dUqvrrx87AMGflz39_ZirW1o4GMCT5b5SmI1sldWjIfIo8Rt4eUwHzMJh7Z62NP2c5QTDiH-V-RvxnN5PyI-jBlWB5D8jIdIHXw69mUUdYOHMpWPVNPvjsITPhrr1YaswgmMEIY99d_kZX7jr9ImZdQOFHZkN9S_aWL2D6INQG0EWZRx62cBlqzwiuXdp3RiaG-l3ILCUm2GfPdGe9gH1EHB7Z8wmfAZ-T5yNCahGQLot-xNcGiIk-kTxJYM6Qx5iZfZgjCnIYmuALUjG4e8SY-z2WuZBHJJPSojRGo31nYsLfaGm6u-8c7tqZseHuWQhpwyvSL6_mpbBT6PvRBw7GN_oSRjgZWDBjcOVFkd09bfFQCsnI1NdMBGxSq3Jq96A7g8IrjwmZxUnMAIFVC6IgeghKzgTkDHuTz5Li1tTWNZHsNJprX8dhSuu-9LR1V8X5McwmV96Qhn3VVpWCl_K1Zq6dwVsiTpRSN60TSpmQxUepV3l2UzLa-8rLoxVFXt1d3lXB5hUu-Ll_iwCqjaoxxnd58HmuG85GwFYb7EfCXdin1L2EOPKBmVroWtJvMnArhQxj3maGGimWn0IS-eyc68XBPZ-G-HyasdKaj4IGeiUnhzEVdpgGqEG_EkahFELaTQep9bi0j1DPD46E-SgzZXP-2BIgkUhdb8hek0UUY9fabZHHZd2ggWzslTDVOXAbAoat2G1ug0zpMxcDXfx8Xlh1KdlN7LD1rhnYnsQmTL8DVghfvFu91G1jfcfS_SQYjNYOunhceSmINDm1jT0EnOgGMrHLbigFPNxc60SkgW3ilk9NTQOlVbeBq7tlcTIdYjnsVM65mwEuE-NXp6GCFdw0Dx43icOF3oXLTefzvv_8-fnPj7CB5Zi1CvxuFoOd07HKxaB3v0gcUvqfsjgMUGg2vWxjKEzYgQXvd8ezvBo5Ov0KDmqc4cJJ6jqh6F2bHTPpr66LZXNa31qwaS7rVai-giSjkbLnTqjtiFnBygWiGDw67nU00WxWycrd2cQXKE4NhRfheiBzOs-quAESZat05naaqWtFhe9plEaHbc_yjvdDQqPtdVXDhRzTs2XlRWD4WY9L79VdDxCOq21aaK_B7RMCjnv32oo3Jx0Zrvfs--B2xd8mS-5RSI_WzMGkzSoTb-0cTuP9UdG4IXAInxyko4WeOTpSxut92SOGg6_57SpzGskGlImcQitfc9JeBayeyTeZkovdgLKvKEX-qxksn2pTw1_LG3iIRBHf84APF1XUYHko-R_Ka5spO86t-sUCThKTqDLsEwvJ-IV49jEzUDSKhVag6Kmsa2YdSdFJ7165Sou7qmP2UtHv2esN2S3Tr-V5Vg9Xa3xH-8TBYfhv5QyprSTQjjUubj4UlCSpK8WB2L5hZWDyBZo0G6DCgCxZHwcz-psmxI471ajPlxmCTTHmMdbKrumQQk0_Fh8hY35s5L6Zp3fORhyheFzTPkV9enfMvHj6KiY79DCwj45iaazrjsWvqorpx8hJdMhX7eFMtzxv9jPDjG5yYDY0h2f1VH4Gms5QNl7pLJznLcOmUEN2rbbDYUlCkKPhd0hzjxi0Y4pZSlIL0UZVI3xnrEMaefXt5jPCVcrvtP5T1G-G_b_mv_8Hhjpqk1oGAAA=.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZXhwIjoxNzUzMzM5MzkxLCJhbGxvd0FjY2Vzc092ZXJQdWJsaWNJbnRlcm5ldCI6dHJ1ZX0=",
+  reportId: "df510bae-3e6d-40de-844d-23b265dd3e26",
+};
+
+const frameworksList = MENUS.map((menu) => ({
+  label: menu.name,
+  value: menu.name,
+}));
+console.log(MENUS);
 
 export default function LL() {
-
+  const [selectedMenu, setSelectedMenu] = useState<string[]>(frameworksList.map(menu => menu.value));
+  const [selectedLayout, setSelectedLayout] = useState<string>("layout-1");
   const handlePowerBIEvent = (eventType: string, event: any) => {
     console.log(`Power BI Event: ${eventType}`, event);
 
-    
     // Handle specific events
     switch (eventType) {
       case "loaded":
@@ -23,46 +39,87 @@ export default function LL() {
         break;
       case "rendered":
         console.log("Report rendered");
-    
+
         break;
       case "filtersApplied":
-       
         break;
       case "dataSelected": {
         console.log("Data selected:", event.detail.dataPoints);
-    
       }
- 
+
       default:
         break;
     }
   };
 
-
   return (
     <div>
+      <div className="flex justify-between m-3 ">
+        <div className="w-3/6">
+          <MultiSelect
+            options={frameworksList}
+            onValueChange={setSelectedMenu}
+            defaultValue={selectedMenu}
+            className="w-full"
+            placeholder="Select Menus"
+            variant="inverted"
+            animation={2}
+            maxCount={3}
+          />
+        </div>
+
+        <Select onValueChange={setSelectedLayout} defaultValue={selectedLayout}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Layout" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.keys(LAYOUTS[0]).map(
+              (key) =>
+                key !== "name" && (
+                  <SelectItem value={key}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-layout-panel-top-icon lucide-layout-panel-top"
+                    >
+                      <rect width="18" height="7" x="3" y="3" rx="1" />
+                      <rect width="7" height="7" x="3" y="14" rx="1" />
+                      <rect width="7" height="7" x="14" y="14" rx="1" />
+                    </svg>
+                    {key}
+                  </SelectItem>
+                )
+            )}
+          </SelectContent>
+        </Select>
+      </div>
       <DynamicLayoutWrapper layout={"props.layout"}>
-      <div className="w-full h-full" dataGrid={{x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12}}>
-            <PowerBIWrapper
-           
-              embedUrl={config.embedUrl}
-              accessToken={config.embedToken}
-              reportId={config.reportId}
-              onEventCallback={handlePowerBIEvent}
-            />
-          </div>
-        {MENUS.map((menu, index) => (
-          <div key={index} className="w-full h-full" dataGrid={menu.layout}>
-            <PowerBIWrapper
-              visualName={menu.visualName}
-              pageName={menu.pageName}
-              embedUrl={config.embedUrl}
-              accessToken={config.embedToken}
-              reportId={config.reportId}
-              onEventCallback={handlePowerBIEvent}
-            />
-          </div>
-        ))}
+        {MENUS.map((menu, index) =>
+          selectedMenu.includes(menu.name) ? (
+            <div
+              key={menu.name}
+              className="w-full h-full"
+              dataGrid={get_layout(menu.name, selectedLayout)}
+            >
+              <PowerBIWrapper
+                key={`${menu.name}-${selectedLayout}`}
+                visualName={menu.visualName}
+                pageName={menu.pageName}
+                embedUrl={config.embedUrl}
+                accessToken={config.embedToken}
+                reportId={config.reportId}
+                onEventCallback={handlePowerBIEvent}
+              />
+            </div>
+          ) : null
+        )}
       </DynamicLayoutWrapper>
     </div>
   );

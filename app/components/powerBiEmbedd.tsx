@@ -4,6 +4,7 @@ import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 
 interface PowerBIReportProps {
+  refresh?: string;
   embedUrl: string;
   accessToken: string;
   visualName?: string;

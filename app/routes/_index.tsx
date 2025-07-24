@@ -1,10 +1,10 @@
-// import PowerBIReport from "~/components/powerBiEmbedd";
-import PowerBIWrapper from "~/components/powerBiWrapper";
+// import PowerBIReport from "@/components/powerBiEmbedd";
+import PowerBIWrapper from "@/components/powerBiWrapper";
 import React, { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
-import { Droppable } from "~/components/Droppable";
-import { Draggable } from "~/components/Draggable";
+import { Droppable } from "@/components/Droppable";
+import { Draggable } from "@/components/Draggable";
 
 const config = {
   embedUrl:

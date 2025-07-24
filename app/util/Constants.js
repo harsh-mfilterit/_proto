@@ -45,3 +45,46 @@ export const MENUS = [
     layout: {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12}
   },
 ];
+
+
+
+export const LAYOUTS = [
+  {
+    name: "Market Share",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+
+  },
+  {
+    name: "Top Lossers",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 6, y: 1, w: 6, h: 12, minW: 2, maxW: 12},
+  },
+  {
+    name: "Top Gainers",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 0, y: 1, w: 6, h: 12, minW: 2, maxW: 12},
+  },
+
+  {
+    name: "Top Cities",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 0, y: 2, w: 6, h: 12, minW: 2, maxW: 12},
+  },
+  {
+    name: "Bottom Cities",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 6, y: 2, w: 6, h: 12, minW: 2, maxW: 12},
+  },
+  {
+    name: "Platfrom-wise Product Table",
+    "layout-1": {x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12},
+    "layout-2": {x: 0, y: 3, w: 12, h: 12, minW: 2, maxW: 12},
+  },
+];
+
+
+export const get_layout = (name,layout_name="layout-2") => {
+  return LAYOUTS.find(layout => layout.name === name)?.[layout_name];
+}
+
