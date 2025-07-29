@@ -69,7 +69,7 @@ const PowerBIReport: React.FC<PowerBIReportProps> = ({
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-10/12">
       <PowerBIEmbed
         embedConfig={{
           type: visualName ? 'visual' : 'report',
@@ -101,6 +101,7 @@ const PowerBIReport: React.FC<PowerBIReportProps> = ({
           embeddedReport.on('loaded', handleReportLoaded);
           embeddedReport.on('rendered', handleReportRendered);
           embeddedReport.on('error', handleError);
+          
         }}
       />
     </div>
