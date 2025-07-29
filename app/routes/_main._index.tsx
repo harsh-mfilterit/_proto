@@ -11,26 +11,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { models } from "powerbi-client";
+import loadingGif from "../assets/loader.gif";
+import { useGetEmbedUrl } from "@/api/getEmbeddUrl";
 
-const config = {
-  embedUrl:
-    "https://app.powerbi.com/reportEmbed?reportId=df510bae-3e6d-40de-844d-23b265dd3e26&groupId=c11cf21f-e3fb-4518-99d5-0246c102312d&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19",
-  embedToken:
-    "H4sIAAAAAAAEACWTR4rEVgAF7zJbGZRaan2DF8o5594ph1bOkvHdPcb7ggdVvL9_rOTuxiT_-fPnRZQQmWVEFo3uOXhvGAvfgn7WN9sWjBAe5LAtZGx7UBkU0mMxgzagikPHo3rBKnTRymfwUJWXVr1lWZA6cda8wUXtOiLckBYVjFqcmkaKW8eCour8vs-rsrG4fYq8RzP69xj1NmrUcjJ9pEbZmFsD_sFN6FT3RfU61OdcDx_-aKIqWOF54yF-kHegjJOuEBW2Ons4dIu30obZ2KcQdI0fz29z91GL24IJedQQQ-NZopsikKn48-Kns9djsp14g0S-U-eY5IYZjBoR1xKdWhsRXBbLNh8lYFyzqgDBuc4NN9Cm9AWtjvKbKOBf6VMNYp6074402WA0AbeiDTVAHjcpv8tHYhGFTaY1XJrvbda-CPAj7APuTUozsh1bNQU1dlO8etbnGlT6IAoeGbcFVZZKpfBcjtgm9XjJsy9n7ORVZqemQaI9o01zzDguixgMz1nayResHgF6NzjZjEqS0j5Wa7HJwOC1B9YyXFHccGwEkxiLKiQnsnmTDyf2bnX-el8YoelYKIngeOjcjE6I210GLdBAmVk99L-477xvhmGkpe_oqQuFVckT52xQbkHCb5rJnGwnO1tco5koAUpDyqpjEIQorvlcQPmt9MFvBquu2neNaXahrrkWqcuvDmMHMJ9WfftBWa_-rKCoGWTU8NKfQCjmodG8_pUIM5PBZ-RAFtq5AHBou9NfZk-NU3bdS0A-Qg-40s_dPU_wsIPizkoYnvDOQ2I7FcnPTTWS8qljP6C4qX4kU37UOrlA4A4K8iGGmNFg2Vobe66hU63Nj8CJzKovrL0YkygOBybQ2TtV4nH79CydRt_8DA-Euhvxilyg6DENiGg4Ej9JyEJNxNbk7K_9118_f_ywyz1to1rcvzfTDbWf0cg0NCUhFlqZSzeHX9frRndR7321HweibxYp5nhK6REYxmIUtBm3c1GCdtybDHy9rYug156l9mebx_AHuZZAqNv8w-_qYaJmc_ihe5WuXyz8KPqv0W_MLPsuo7NT8PtRZRFscBx41LXr6WtUlXmAEb3LPEYB17Wx6Kb-xqyJHIBwLXUhm3CVEUo6C0rdGE9mNXy91rsU8Uh8T_1-Ln0UnxqBkKWa5TMAq95g5DcGbDWk7DUxm5N8vyywR-gXf-mawt5WY1yFekzv94DCrsUW5cgGwBe_d50CXHAfxu1c9TkIDvx6drX0owqKcZW6pcwBrLXOUnlKe2SPi9f1Tv-v-Z7qYpGDX8tkGrTgrgrWeK0VlC9SOmb2_5TbVEOy7Uvxi81dTkW9VpgRGFg-5Mibo6tlFeIwqwaI2I_MMRXDLd4uXSv02dqbHefVRkxH52wn7jJrnro3Fg7tOhnIHMoF5VQePEDCzNIs3HoUkgqpcIkF1dszlYvyOHkKSFNhlf1SzIjdD85jkWZj4h-omvOvy_UNyMzYCLgmFTR9iOhReFNMMac40Mec9K9SYM9r8TN9RUX9NYweVMXILotKB1OB_i5WoQlS4zbO3a_AndxiZc0dA81aK2KN0bmhv2mxVM31Nh9OaQYON44JN2Laadcmno1P9tzFuPbs-mw0v1FaauWdITnyh3G21zGTnz5EYnmQvHGsmSluKYkE0RpKbIsLDAX-0_zPv8GTwhVaBgAA.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUlORElBLUNFTlRSQUwtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZXhwIjoxNzUzMzUzMDI0LCJhbGxvd0FjY2Vzc092ZXJQdWJsaWNJbnRlcm5ldCI6dHJ1ZX0=",
-  reportId: "df510bae-3e6d-40de-844d-23b265dd3e26",
-};
+
 const frameworksList = MENUS.map((menu) => ({
   label: menu.name,
   value: menu.name,
 }));
-console.log(MENUS);
 
-export default function LL() {
+
+export default function Layout() {
   const [selectedMenu, setSelectedMenu] = useState<string[]>(
     frameworksList.map((menu) => menu.value)
   );
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const [selectedLayout, setSelectedLayout] = useState<string>("layout-1");
+  const { data, isLoading, error } = useGetEmbedUrl();
+
+  
   const handlePowerBIEvent = (eventType: string, event: any) => {
     console.log(`Power BI Event: ${eventType}`, event);
 
@@ -71,8 +70,18 @@ export default function LL() {
       : null;
   };
 
+
+  function Loader() {
+    return (
+      <div className="absolute z-50  top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-lg">
+        <img src={loadingGif} alt="Loading..." className="h-32 w-32" />
+      </div>
+    );
+  }
+
   return (
     <div>
+      {isLoading && <Loader />}
       <div className=" m-3 ">
         <div className="flex justify-between">
           <div className="w-3/6">
@@ -156,7 +165,7 @@ export default function LL() {
           onEventCallback={handlePowerBIEvent}
         /> */}
 
-      <DynamicLayoutWrapper layout={"props.layout"}>
+      {data && <DynamicLayoutWrapper layout={"props.layout"}>
         {MENUS.map((menu, index) =>
           selectedMenu.includes(menu.name) ? (
             <div
@@ -165,6 +174,7 @@ export default function LL() {
               dataGrid={get_layout(menu.name, selectedLayout)}
             >
               <Item
+                config={data}
                 menu={menu}
                 filters={selectedFilter==="All"?[]:[getFilter("customer", selectedFilter)]}
                 layout={selectedLayout}
@@ -189,7 +199,7 @@ export default function LL() {
           // </div>
           null
         )}
-      </DynamicLayoutWrapper>
+      </DynamicLayoutWrapper>}
     </div>
   );
 }
@@ -199,11 +209,13 @@ function Item({
   layout,
   onEventCallback,
   filters,
+  config,
 }: {
   menu: any;
   layout: any;
   onEventCallback: any;
   filters: any;
+  config: any;
 }) {
   const [selectedType, setSelectedType] = useState<string>(
     menu.types ? Object.keys(menu?.types)[0] : null
