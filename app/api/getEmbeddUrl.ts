@@ -30,7 +30,7 @@ export async function getEmbedUrl() {
       console.log("api is called");
   // If not cached, fetch from API
   try {
-    const baseUrl = import.meta.env.VITE_POWERBI_BASE_URL;
+    const baseUrl = "https://ktsmvxmbh7btpuuytuegdstxp40mhkcw.lambda-url.us-west-2.on.aws/";
     const response = await axios.get(baseUrl);
 
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(response.data));
