@@ -66,23 +66,23 @@ export const LAYOUTS = [
   {
     name: "Top Lossers",
     "layout-1": { x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12 },
-    "layout-2": { x: 6, y: 1, w: 6, h: 12, minW: 2, maxW: 12 },
+    "layout-2": { x: 6, y: 1, w: 5, h: 12, minW: 2, maxW: 12 },
   },
   {
     name: "Top Gainers",
     "layout-1": { x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12 },
-    "layout-2": { x: 0, y: 1, w: 6, h: 12, minW: 2, maxW: 12 },
+    "layout-2": { x: 0, y: 1, w: 5, h: 12, minW: 2, maxW: 12 },
   },
 
   {
     name: "Top Cities",
     "layout-1": { x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12 },
-    "layout-2": { x: 0, y: 2, w: 6, h: 12, minW: 2, maxW: 12 },
+    "layout-2": { x: 0, y: 2, w: 5, h: 12, minW: 2, maxW: 12 },
   },
   {
     name: "Bottom Cities",
     "layout-1": { x: 0, y: 0, w: 12, h: 12, minW: 2, maxW: 12 },
-    "layout-2": { x: 6, y: 2, w: 6, h: 12, minW: 2, maxW: 12 },
+    "layout-2": { x: 6, y: 2, w: 5, h: 12, minW: 2, maxW: 12 },
   },
   {
     name: "Platfrom-wise Product Table",
