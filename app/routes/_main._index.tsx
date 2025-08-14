@@ -14,12 +14,10 @@ import { models } from "powerbi-client";
 import loadingGif from "../assets/loader.gif";
 import { useGetEmbedUrl } from "@/api/getEmbeddUrl";
 
-
 const frameworksList = MENUS.map((menu) => ({
   label: menu.name,
   value: menu.name,
 }));
-
 
 export default function Layout() {
   const [selectedMenu, setSelectedMenu] = useState<string[]>(
@@ -29,7 +27,6 @@ export default function Layout() {
   const [selectedLayout, setSelectedLayout] = useState<string>("layout-1");
   const { data, isLoading, error } = useGetEmbedUrl();
 
-  
   const handlePowerBIEvent = (eventType: string, event: any) => {
     console.log(`Power BI Event: ${eventType}`, event);
 
@@ -59,17 +56,16 @@ export default function Layout() {
       ? {
           $schema: "http://powerbi.com/product/schema#basic",
           target: {
-            table: 'Book1',
+            table: "Book1",
             column: name,
           },
-// {table: 'Book1', column: 'customer'}
+          // {table: 'Book1', column: 'customer'}
           operator: "In",
           values: [filter],
           filterType: models.FilterType.Basic,
         }
       : null;
   };
-
 
   function Loader() {
     return (
@@ -156,14 +152,18 @@ export default function Layout() {
         </div>
       </div>
 
-      {/* <PowerBIWrapper
-        
-          embedUrl={config.embedUrl}
-          accessToken={config.embedToken}
-          reportId={config.reportId}
-          filters={[getFilter("customer", selectedFilter)]}
-          onEventCallback={handlePowerBIEvent}
-        /> */}
+      {/* {data && (
+        <div className="w-screen ">
+          <PowerBIWrapper
+            embedUrl={data.embedUrl}
+            accessToken={data.embedToken}
+            reportId={data.reportId}
+            visualName="1b8675e4d2e5d1cb3015"
+            pageName="ReportSection"
+            // onEventCallback={handlePowerBIEvent}
+          />
+        </div>
+      )} */}
 
       {data && <DynamicLayoutWrapper layout={"props.layout"}>
         {MENUS.map((menu, index) =>
