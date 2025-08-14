@@ -223,7 +223,7 @@ export const LAYOUTS = [
   {
     name: "owned",
     "layout-1": { x: 0, y: 6, w: 12, h: 12, minW: 2, maxW: 12 },
-    "layout-2": { x: 0, y: 6, w: 5, h: 12, minW: 2, maxW: 12 },
+    "layout-2": { x: 0, y: 6, w: 12, h: 12, minW: 2, maxW: 12 },
   },
   // {
   //   name: "competitor",
